@@ -4,7 +4,7 @@ TEST_DIR=./training/data/test/
 
 # Saving and logging
 SAVE_DIR=../gdrive/MyDrive/model_saves/princeton/
-LOG_FREQ=10000000 # disable logging due to segmentation fault
+LOG_FREQ=20
 SAVE_FREQ=50
 CKPT_DIR=None
 MAX_TO_KEEP=2
