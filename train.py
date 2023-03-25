@@ -245,7 +245,7 @@ def train(args):
             test_batch = test_ds[0]
             img = test_batch[0]
             gt_img = test_batch[1]
-            log(img, gt_img, Phase_var, G, snr, vgg_model, summary_writer, step, params, args)
+            # log(img, gt_img, Phase_var, G, snr, vgg_model, summary_writer, step, params, args)
         for _ in range(args.Phase_iters):
             img_batch = next(train_ds)
             img = img_batch[0]
@@ -256,7 +256,7 @@ def train(args):
             img = img_batch[0]
             gt_img = img_batch[1]
             train_step('G', img, gt_img, Phase_var, Phase_optimizer, G, G_optimizer, snr, vgg_model, params, args)
-        print("Step time: {}\n".format(time.time() - start), flush=True)
+        print("Step {} time: {}\n".format(step, time.time() - start), flush=True)
 
 
 ## Entry point
