@@ -3,6 +3,8 @@
 
 [Ethan Tseng](https://ethan-tseng.github.io), [Shane Colburn](https://scholar.google.com/citations?user=WLnx6NkAAAAJ&hl=en), [James Whitehead](https://scholar.google.com/citations?user=Hpcg0h4AAAAJ&hl=en), [Luocheng Huang](https://scholar.google.com/citations?user=x9UDJHgAAAAJ&hl=en), [Seung-Hwan Baek](https://sites.google.com/view/shbaek/), [Arka Majumdar](https://scholar.google.com/citations?user=DpIGlW4AAAAJ&hl=en), [Felix Heide](https://www.cs.princeton.edu/~fheide/)
 
+**This repository is a fork of the code provided by the research paper, and is not the original repository.**
+
 This code implements a differentiable proxy model for simulating meta-optics and a neural feature propagation deconvolution method. These components are optimized end-to-end using machine learning optimizers.
 
 The experimental results from the manuscript and the supplemental information are reproducible with this implementation. The proposed differentiable proxy model, neural feature propagation, and end-to-end optimization framework are implemented completely in TensorFlow, without dependency on third-party libraries.
