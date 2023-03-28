@@ -258,16 +258,34 @@ def train(args):
             train_step('G', img, gt_img, Phase_var, Phase_optimizer, G, G_optimizer, snr, vgg_model, params, args)
         print("Step {} time: {}\n".format(step, time.time() - start), flush=True)
 
+def connect_to_tpu(tpu_address: str = None):
+    if tpu_address is not None:  # When using GCP
+        cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver(
+            tpu=tpu_address)
+        if tpu_address not in ("", "local"):
+            tf.config.experimental_connect_to_cluster(cluster_resolver)
+        tf.tpu.experimental.initialize_tpu_system(cluster_resolver)
+        strategy = tf.distribute.experimental.TPUStrategy(cluster_resolver)
+        print("Running on TPU ", cluster_resolver.master())
+        print("REPLICAS: ", strategy.num_replicas_in_sync)
+        return cluster_resolver, strategy
+    else:                           # When using Colab or Kaggle
+        try:
+            cluster_resolver = tf.distribute.cluster_resolver.TPUClusterResolver.connect()
+            strategy = tf.distribute.experimental.TPUStrategy(cluster_resolver)
+            print("Running on TPU ", cluster_resolver.master())
+            print("REPLICAS: ", strategy.num_replicas_in_sync)
+            return cluster_resolver, strategy
+        except:
+            print("WARNING: No TPU detected.")
+            mirrored_strategy = tf.distribute.MirroredStrategy()
+            return None, mirrored_strategy
 
 ## Entry point
 def main():
     args = parse_args()
     if args.use_tpu:
-        resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='')
-        tf.config.experimental_connect_to_cluster(resolver)
-        tf.tpu.experimental.initialize_tpu_system(resolver)
-        print("All devices: ", tf.config.list_logical_devices('TPU'))
-        strategy = tf.distribute.TPUStrategy(resolver)
+        resolver, strategy = connect_to_tpu()
         with strategy.scope():
             train(args)
     else:
