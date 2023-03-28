@@ -262,7 +262,16 @@ def train(args):
 ## Entry point
 def main():
     args = parse_args()
-    train(args)
+    if args.use_tpu:
+        resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='')
+        tf.config.experimental_connect_to_cluster(resolver)
+        tf.tpu.experimental.initialize_tpu_system(resolver)
+        print("All devices: ", tf.config.list_logical_devices('TPU'))
+        strategy = tf.distribute.TPUStrategy(resolver)
+        with strategy.scope():
+            train(args)
+    else:
+        train(args)
 
 if __name__ == '__main__':
     main()
