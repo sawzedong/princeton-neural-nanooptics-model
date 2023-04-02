@@ -53,6 +53,5 @@ G_ITERS=10
 G_NETWORK=FP
 SNR_OPT=False #True
 SNR_INIT=3.0
-USE_TPU=True
 
 python3 train.py --train_dir $TRAIN_DIR --test_dir $TEST_DIR --save_dir $SAVE_DIR --log_freq $LOG_FREQ --save_freq $SAVE_FREQ --ckpt_dir $CKPT_DIR --max_to_keep $MAX_TO_KEEP --loss_mode $LOSS_MODE --batch_weights $BATCH_WEIGHTS --Norm_loss_weight $NORM_LOSS_WEIGHT --P_loss_weight $P_LOSS_WEIGHT --vgg_layers $VGG_LAYERS --Spatial_loss_weight $SPATIAL_LOSS_WEIGHT --aug_rotate $AUG_ROTATE --real_psf $REAL_PSF --psf_mode $PSF_MODE --conv_mode $CONV_MODE --conv $CONV --do_taper $DO_TAPER --offset $OFFSET --normalize_psf $NORMALIZE_PSF --theta_base $THETA_BASE --num_coeffs $NUM_COEFFS --use_general_phase $USE_GENERAL_PHASE --metasurface $METASURFACE --s1 $S1 --s2 $S2 --alpha $ALPHA --target_wavelength $TARGET_WAVELENGTH --bound_val $BOUND_VAL --a_poisson $A_POISSON --b_sqrt $B_SQRT --mag $MAG --Phase_lr $PHASE_LR --Phase_iters $PHASE_ITERS --G_lr $G_LR --G_iters $G_ITERS --G_network $G_NETWORK --snr_opt $SNR_OPT --snr_init $SNR_INIT 
