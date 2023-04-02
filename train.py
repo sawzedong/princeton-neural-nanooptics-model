@@ -284,12 +284,7 @@ def connect_to_tpu(tpu_address: str = None):
 ## Entry point
 def main():
     args = parse_args()
-    if args.use_tpu:
-        resolver, strategy = connect_to_tpu()
-        with strategy.scope():
-            train(args)
-    else:
-        train(args)
+    train(args)
 
 if __name__ == '__main__':
     main()
