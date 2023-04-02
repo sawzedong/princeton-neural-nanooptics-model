@@ -72,6 +72,7 @@ def parse_args():
     parser.add_argument('--G_network'  , type=str, default='FP', help='Select deconvolution method')
     parser.add_argument('--snr_opt'    , type=str2bool, default=False, help='True to optimize SNR parameter')
     parser.add_argument('--snr_init'   , type=float, default=4.0, help='Initial value of SNR parameter')
+    parser.add_argument('--use_tpu'   , type=str2bool, default=True, help='Use TPU for training instead')
 
     args = parser.parse_args()
     args.theta_base = [float(w) for w in args.theta_base.split(',')]
