@@ -6,6 +6,7 @@ from args import parse_args
 import metasurface.solver as solver
 import metasurface.conv as conv
 import matplotlib.pyplot as plt
+import datetime
 import sys
 
 sys.argv = ['', '--train_dir', '.',
@@ -66,6 +67,10 @@ def reconstruct(img_name, psf, snr, G):
 
     plt.figure(figsize=(6, 6))
     plt.imshow(G_img_)
+    today = datetime.datetime.now()
+    date = today.strftime('%d%b%%Y-%H_%M')
+    plt.savefig('../gdrive/MyDrive/model_saves/princeton/figure/' + date + "-" +
+                img_name.replace("./experimental/data/captures/", "").replace(".npy", ".png"))
 
 
 # Figure 3
