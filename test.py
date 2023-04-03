@@ -68,7 +68,7 @@ def reconstruct(img_name, psf, snr, G):
     plt.figure(figsize=(6, 6))
     plt.imshow(G_img_)
     today = datetime.datetime.now()
-    date = today.strftime('%d%b%%Y-%H_%M')
+    date = today.strftime('%d%b%Y-%H_%M')
     plt.savefig('../gdrive/MyDrive/model_saves/princeton/figure/' + date + "-" +
                 img_name.replace("./experimental/data/captures/", "").replace(".npy", ".png"))
 

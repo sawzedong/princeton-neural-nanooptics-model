@@ -1,3 +1,5 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 import tensorflow as tf
 import numpy as np
 from networks.select import select_G
@@ -9,8 +11,10 @@ import metasurface.solver as solver
 import metasurface.conv as conv
 import scipy.optimize as scp_opt
 
-import os
 import time
+import logging
+tf.get_logger().setLevel(logging.ERROR)
+logging.getLogger("tensorflow").setLevel(logging.ERROR)
 
 ## Logging for TensorBoard
 def log(img, gt_img, Phase_var, G, snr, vgg_model, summary_writer, step, params, args):
