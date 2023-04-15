@@ -74,6 +74,6 @@ def reconstruct(img_name, psf, snr, G):
 
 
 # Figure 3
-reconstruct('./experimental/data/captures/138301.npy', psf, snr, G)
-reconstruct('./experimental/data/captures/102302.npy', psf, snr, G)
-reconstruct('./experimental/data/captures/110802.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/dhs-logo.npy', psf, snr, G)
+# reconstruct('./experimental/data/captures/102302.npy', psf, snr, G)
+# reconstruct('./experimental/data/captures/110802.npy', psf, snr, G)
