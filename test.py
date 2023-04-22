@@ -12,7 +12,7 @@ import sys
 sys.argv = ['', '--train_dir', '.',
             '--test_dir', '.',
             '--save_dir', '.',
-            '--ckpt_dir', '.experimental/ckpt/',  # to use pre-given checkpoint
+            #'--ckpt_dir', './experimental/ckpt/',  # to use pre-given checkpoint
             '--ckpt_dir', '../gdrive/MyDrive/model_saves/princeton/', # meant for colab usage
             '--real_psf', './experimental/data/psf/psf.npy',
             '--psf_mode', 'REAL_PSF',
