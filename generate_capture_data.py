@@ -7,7 +7,7 @@ args = parse_args()
 params = solver.initialize_params(args)
 
 input_file = r"./experimental/data/dhs-logo.jpg"
-output_file = r"./experimental/data/captures/dhs-logo.npy"
+output_file = r"./experimental/data/captures/dhs-logo1.npy"
 
 def load(image_width, image_width_padded, augment):
     # image_width = Width for image content
@@ -23,12 +23,16 @@ def load(image_width, image_width_padded, augment):
             image = tf.image.random_flip_up_down(image)
         image = tf.image.resize_with_crop_or_pad(
             image, image_width_padded, image_width_padded)
+        
+        with open(output_file, 'wb') as f:
+            np.save(f, np.array([image]))
+
         return (image, image)  # Input and GT
     return load_fn
 
-load_fn = load(params['out_width'], params['load_width'], augment=False)
+## replace 1080 with params['load_width']
+load_fn = load(params['out_width'], 1080, augment=False)
 image = load_fn(input_file)
 
-with open(output_file, 'wb') as f:
-    np.save(f, image)
+
 
