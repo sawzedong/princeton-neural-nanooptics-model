@@ -2,8 +2,8 @@ import tensorflow as tf
 import numpy as np
 
 # NOTE: run file from parent folder
-input_file = r"./experimental/data/dhs-logo.jpg"
-output_file = r"./experimental/data/captures/dhs-logo.npy"
+input_file = r"./data_generator/dhs-logo-up.jpg"
+output_file = r"./experimental/data/captures/dhs-logo-up.npy"
 
 def load(image_width, image_width_padded, augment):
     # image_width = Width for image content
