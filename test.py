@@ -12,6 +12,7 @@ import sys
 sys.argv = ['', '--train_dir', '.',
             '--test_dir', '.',
             '--save_dir', '.',
+            '--ckpt_dir', '.experimental/ckpt/',  # to use pre-given checkpoint
             '--ckpt_dir', '../gdrive/MyDrive/model_saves/princeton/', # meant for colab usage
             '--real_psf', './experimental/data/psf/psf.npy',
             '--psf_mode', 'REAL_PSF',
@@ -75,5 +76,5 @@ def reconstruct(img_name, psf, snr, G):
 
 # Figure 3
 reconstruct('./experimental/data/captures/dhs-logo.npy', psf, snr, G)
-# reconstruct('./experimental/data/captures/102302.npy', psf, snr, G)
-# reconstruct('./experimental/data/captures/110802.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/dhs-logo-up.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/110802.npy', psf, snr, G)

@@ -2,7 +2,8 @@ import numpy as np
 # NOTE: run file from parent folder
 files = [
     r'./experimental/data/captures/102302.npy',
-    r'./experimental/data/captures/dhs-logo.npy'
+    r'./experimental/data/captures/dhs-logo.npy',
+    r'./experimental/data/captures/dhs-logo-up.npy',
 ]
 
 for file in files:
