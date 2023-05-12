@@ -9,11 +9,12 @@ import matplotlib.pyplot as plt
 import datetime
 import sys
 
+ckpt_dir_pre = './experimental/ckpt/'  # to use pre-given checkpoint
+ckpt_dir_self = '../gdrive/MyDrive/model_saves/princeton/' # meant for colab usage
+
 sys.argv = ['', '--train_dir', '.',
             '--test_dir', '.',
             '--save_dir', '.',
-            '--ckpt_dir1', './experimental/ckpt/',  # to use pre-given checkpoint
-            '--ckpt_dir_self', '../gdrive/MyDrive/model_saves/princeton/', # meant for colab usage
             '--real_psf', './experimental/data/psf/psf.npy',
             '--psf_mode', 'REAL_PSF',
             '--conv_mode', 'REAL',
@@ -30,7 +31,7 @@ snr1 = tf.Variable(args.snr_init, dtype=tf.float32)
 G1 = select_G(params, args)
 checkpoint1 = tf.train.Checkpoint(G=G1, snr=snr1)
 status1 = checkpoint1.restore(tf.train.latest_checkpoint(
-    args.ckpt_dir_pre, latest_filename=None))
+    ckpt_dir_pre, latest_filename=None))
 status1.expect_partial()
 
 # for self trained model
@@ -38,7 +39,7 @@ snr2 = tf.Variable(args.snr_init, dtype=tf.float32)
 G2 = select_G(params, args)
 checkpoint2 = tf.train.Checkpoint(G=G2, snr=snr2)
 status2 = checkpoint2.restore(tf.train.latest_checkpoint(
-    args.ckpt_dir_self, latest_filename=None))
+    ckpt_dir_self, latest_filename=None))
 status2.expect_partial()
 
 ## PERFORMING DECONVOLUTION
