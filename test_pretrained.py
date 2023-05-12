@@ -9,12 +9,10 @@ import matplotlib.pyplot as plt
 import datetime
 import sys
 
-ckpt_dir_pre = './experimental/ckpt/'  # to use pre-given checkpoint
-ckpt_dir_self = '../gdrive/MyDrive/model_saves/princeton/' # meant for colab usage
-
 sys.argv = ['', '--train_dir', '.',
             '--test_dir', '.',
             '--save_dir', '.',
+            '--ckpt_dir', './experimental/ckpt/',  # to use pre-given checkpoint
             '--real_psf', './experimental/data/psf/psf.npy',
             '--psf_mode', 'REAL_PSF',
             '--conv_mode', 'REAL',
@@ -26,21 +24,13 @@ params = solver.initialize_params(args)
 params['conv_fn'] = conv.convolution_tf(params, args)
 params['deconv_fn'] = conv.deconvolution_tf(params, args)
 
-# for pre-trained model
-snr1 = tf.Variable(args.snr_init, dtype=tf.float32)
-G1 = select_G(params, args)
-checkpoint1 = tf.train.Checkpoint(G=G1, snr=snr1)
-status1 = checkpoint1.restore(tf.train.latest_checkpoint(
-    ckpt_dir_pre, latest_filename=None))
-status1.expect_partial()
+snr = tf.Variable(args.snr_init, dtype=tf.float32)
+G = select_G(params, args)
+checkpoint = tf.train.Checkpoint(G=G, snr=snr)
 
-# for self trained model
-snr2 = tf.Variable(args.snr_init, dtype=tf.float32)
-G2 = select_G(params, args)
-checkpoint2 = tf.train.Checkpoint(G=G2, snr=snr2)
-status2 = checkpoint2.restore(tf.train.latest_checkpoint(
-    ckpt_dir_self, latest_filename=None))
-status2.expect_partial()
+status = checkpoint.restore(tf.train.latest_checkpoint(
+    args.ckpt_dir, latest_filename=None))
+status.expect_partial()
 
 ## PERFORMING DECONVOLUTION
 # Check that the dimensions agree with experimental captures
@@ -55,7 +45,7 @@ psf = tf.image.resize_with_crop_or_pad(psf, params['psf_width'], params['psf_wid
 psf = psf / tf.reduce_sum(psf, axis=(1,2), keepdims=True)
 
 
-def reconstruct(img_name, psf, snr, G, info=""):
+def reconstruct(img_name, psf, snr, G):
     img = np.load(img_name)
     _, G_img, _ = params['deconv_fn'](img, psf, snr, G, training=False)
     G_img_ = G_img.numpy()[0, :, :, :]
@@ -80,15 +70,12 @@ def reconstruct(img_name, psf, snr, G, info=""):
     today = datetime.datetime.now()
     date = today.strftime('%d%b%Y-%H_%M')
     plt.savefig('../gdrive/MyDrive/model_saves/princeton/figure/' + date + "-" +
-                img_name.replace("./experimental/data/captures/", "").replace(".npy", f"-{info}.png"))
+                img_name.replace("./experimental/data/captures/", "").replace(".npy", "-pre.png"))
 
-def comparison(img_name, psf, snr1, snr2, G1, G2):
-    reconstruct(img_name, psf, snr1, G1, "pre")
-    reconstruct(img_name, psf, snr2, G2, "self")
 
-# Figure
-comparison('./experimental/data/captures/102302.npy', psf, snr1, G1, snr2, G2)
-comparison('./experimental/data/captures/110802.npy', psf, snr1, G1, snr2, G2)
-comparison('./experimental/data/captures/dhs-logo.npy', psf, snr1, G1, snr2, G2)
-comparison('./experimental/data/captures/dog.npy', psf, snr1, G1, snr2, G2)
-comparison('./experimental/data/captures/rubiks-cube.npy', psf, snr1, G1, snr2, G2)
+# Figure 3
+reconstruct('./experimental/data/captures/102302.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/110802.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/dhs-logo.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/dog.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/rubiks-cube.npy', psf, snr, G)

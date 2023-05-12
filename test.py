@@ -9,10 +9,10 @@ import matplotlib.pyplot as plt
 import datetime
 import sys
 
+# intended for self trained model
 sys.argv = ['', '--train_dir', '.',
             '--test_dir', '.',
             '--save_dir', '.',
-            #'--ckpt_dir', './experimental/ckpt/',  # to use pre-given checkpoint
             '--ckpt_dir', '../gdrive/MyDrive/model_saves/princeton/', # meant for colab usage
             '--real_psf', './experimental/data/psf/psf.npy',
             '--psf_mode', 'REAL_PSF',
@@ -71,10 +71,12 @@ def reconstruct(img_name, psf, snr, G):
     today = datetime.datetime.now()
     date = today.strftime('%d%b%Y-%H_%M')
     plt.savefig('../gdrive/MyDrive/model_saves/princeton/figure/' + date + "-" +
-                img_name.replace("./experimental/data/captures/", "").replace(".npy", ".png"))
+                img_name.replace("./experimental/data/captures/", "").replace(".npy", "-self.png"))
 
 
 # Figure 3
-reconstruct('./experimental/data/captures/dhs-logo.npy', psf, snr, G)
-reconstruct('./experimental/data/captures/dhs-logo-up.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/102302.npy', psf, snr, G)
 reconstruct('./experimental/data/captures/110802.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/dhs-logo.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/dog.npy', psf, snr, G)
+reconstruct('./experimental/data/captures/rubiks-cube.npy', psf, snr, G)
