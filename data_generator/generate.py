@@ -2,8 +2,10 @@ import tensorflow as tf
 import numpy as np
 
 # NOTE: run file from parent folder
-input_file = r"./data_generator/dhs-logo-up.jpg"
-output_file = r"./experimental/data/captures/dhs-logo-up.npy"
+# NOTE: the best image size is 720 x 720
+item_name = input("File name: ")
+input_file = r"./data_generator/"+item_name+r".jpg"
+output_file = r"./experimental/data/captures/"+item_name+r".npy"
 
 def load(image_width, image_width_padded, augment):
     # image_width = Width for image content
