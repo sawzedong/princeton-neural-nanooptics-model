@@ -76,11 +76,12 @@ def reconstruct(img_name, psf, snr, G, info=""):
     G_img_[G_img_ > 1.0] = 1.0
 
     plt.figure(figsize=(6, 6))
+    plt.axis('off')
     plt.imshow(G_img_)
     today = datetime.datetime.now()
     date = today.strftime('%d%b%Y-%H_%M')
     plt.savefig('../gdrive/MyDrive/model_saves/princeton/figure/' + date + "-" +
-                img_name.replace("./experimental/data/captures/", "").replace(".npy", f"-{info}.png"))
+                img_name.replace("./experimental/data/captures/", "").replace(".npy", f"-{info}.png"), bbox_inches='tight', pad_inches=0)
 
 def comparison(img_name, psf, snr1, G1, snr2, G2):
     reconstruct(img_name, psf, snr1, G1, "pre")
